@@ -1,0 +1,12 @@
+<!-- 若要引用hero这个变量，必须在当前组件类中有此申明，否则html抛出找不到对象的错误 -->
+<div *ngIf="hero">
+
+  <h2>{{hero.name | uppercase}} Details</h2>
+  <div><span>id: </span>{{hero.id}}</div>
+  <div>
+    <label>name:
+      <input [(ngModel)]="hero.name" placeholder="name"/>
+    </label>
+  </div>
+
+</div>
