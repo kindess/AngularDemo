@@ -6,18 +6,40 @@
 <!--<div><span>id: </span>{{hero.id}}</div>-->
 <!--<div><span>name: </span>{{hero.name}}</div>-->
 
-<h2>数据流双向绑定</h2>
 <div *ngIf="selectedHero">
+  <h2>数据流双向绑定</h2>
   <label>name:</label>
   <!-- [(ngModel)]用于双向绑定数据，需要注意的是，一定要导入FormsModule模块才能使用  -->
   <input [(ngModel)]="selectedHero.name" placeholder="请输入名字">
 </div>
 
 <div class="heroes">
-  <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero" >
-    <span class="badge">{{hero.id}}</span> {{hero.name}}
+<!-- 点击显示hero详情 -->
+<!--  <li *ngFor="let hero of heroes" (click)="onSelect(hero)" [class.selected]="hero === selectedHero" >-->
+<!--    <span class="badge">{{hero.id}}</span> {{hero.name}}-->
+<!--  </li>-->
+<!-- 导航显示hero详情 -->
+  <li *ngFor="let hero of heroes">
+    <a routerLink="/detail/{{hero.id}}">
+      <span class="badge">{{hero.id}}</span> {{hero.name}}
+    </a>
+    <button class="delete" title="delete hero"
+            (click)="delete(hero)">x</button>
   </li>
 </div>
 
+
+<h2>添加英雄</h2>
+<div>
+  <label>Hero name:
+<!--  TODO： 取文本框输入值  -->
+    <input #heroName />
+  </label>
+  <!-- (click) passes input value to add() and then clears the input -->
+  <button (click)="add(heroName.value); heroName.value=''">
+    添加
+  </button>
+</div>
+
 <!-- 这句代码的意义？ -->
-<app-hero-detail [hero]="selectedHero"></app-hero-detail>
+<!--<app-hero-detail [hero]="selectedHero"></app-hero-detail>-->

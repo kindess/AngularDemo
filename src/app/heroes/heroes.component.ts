@@ -10,6 +10,11 @@ import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-heroes',
+  /**
+   * 当 Angular 发现某个组件依赖某个服务时，它会首先检查是否该注入器中已经有了那个服务的任何现有实例。
+   * 如果所请求的服务尚不存在，注入器就会使用以前注册的服务提供商来制作一个，并把它加入注入器中，然后把该服务返回给 Angular。
+   */
+  providers: [HeroService], // 服务提供者
   templateUrl: './heroes.component.html', // 模板页面路径
   styleUrls: ['./heroes.component.css']   // 样式文件路径
 })
@@ -26,9 +31,9 @@ export class HeroesComponent implements OnInit {
     name: 'Windstorm'
   };*/
   // heros: Hero[] = HEROES;
-  selectedHero: Hero;
+  // selectedHero: Hero;
   heroes: Hero[];
-  // 注入heroService服务
+  // 依赖注入heroService服务
   constructor(private heroService: HeroService) { }
 
   /**
@@ -40,9 +45,9 @@ export class HeroesComponent implements OnInit {
   }
 
   // 定义方法
-  onSelect(hero: Hero): void {
+/*  onSelect(hero: Hero): void {
     this.selectedHero = hero;
-  }
+  }*/
   // 调用heroService服务方法（同步获取数据）
 /*  getHeroes(): void {
     this.heroes = this.heroService.getHeroes();
@@ -52,5 +57,24 @@ export class HeroesComponent implements OnInit {
   getHeroes(): void {
     this.heroService.getHeroes()
       .subscribe(heroes => this.heroes = heroes);
+  }
+
+  // 添加英雄
+  add(name: string): void {
+    // 判空（null,undefined、""等等）
+    name = name.trim();
+    if (!name) { return; }
+    // TODO : { name } as Hero ？
+    this.heroService.addHero({ name } as Hero)
+      .subscribe(hero => {
+        this.heroes.push(hero);
+      });
+  }
+
+  // 删除
+  delete(hero: Hero): void {
+    // filter数组筛选方法，筛选出不是当前hero的其他所有
+    this.heroes = this.heroes.filter(h => h !== hero);
+    this.heroService.deleteHero(hero).subscribe();
   }
 }

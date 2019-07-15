@@ -1,0 +1,12 @@
+<h3>Top Heroes</h3>
+<div class="grid grid-pad">
+  <a *ngFor="let hero of heroes" class="col-1-4"
+     routerLink="/detail/{{hero.id}}">
+    <div class="module hero">
+      <h4>{{hero.name}}</h4>
+    </div>
+  </a>
+</div>
+
+<!-- 匹配组件的选择器是"app-hero-search"，内嵌此组件的页面到当前页面中 -->
+<app-hero-search></app-hero-search>
